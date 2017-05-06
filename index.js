@@ -38,8 +38,8 @@ Spinner.prototype.start = function() {
 
   var current = 0;
   var self = this;
-
-  this.id = setInterval(function() {
+  
+  var iterate = function () {
     var msg = self.text.indexOf('%s') > -1
       ? self.text.replace('%s', self.chars[current])
       : self.chars[current] + ' ' + self.text;
@@ -47,8 +47,11 @@ Spinner.prototype.start = function() {
     self.onTick(msg);
 
     current = ++current % self.chars.length;
-  }, this.delay);
-  
+  };
+
+  iterate();
+  this.id = setInterval(iterate, this.delay);
+
   return this;
 };
 
